@@ -1,0 +1,38 @@
+# https://www.ory.sh/hydra/docs/next/reference/configuration
+version: v1.7.4
+
+serve:
+  public:
+    host: localhost
+    port: 4444
+  admin:
+    host: localhost
+    port: 4445
+
+dsn: postgres://postgres:@192.168.56.11:5432/hydra?sslmode=disable
+
+urls:
+  self:
+    issuer: http://localhost:4444/
+
+strategies:
+  access_token: opaque
+  scope: exact
+
+ttl:
+  access_token: 1h
+
+oauth2:
+  hashers:
+    bcrypt:
+      cost: 10
+  expose_internal_errors: true
+
+secrets:
+ system:
+   # newer on top
+   - pDrjqoFhCJlIBQmSAWSElWQg9Pmw97FA
+   - xHiEfkCsYDaV8PL5HUs8XwbkhHbPmMGQ
+
+log:
+  level: info

@@ -60,6 +60,38 @@ Start Client.
 node jwt/client.js
 ```
 
+## Scenario #2: opaque token
+
+![Scenario #2: opaque token](misc/scenarios-opaque-token.png)
+
+Start Hydra.
+
+```sh
+# see: export DSN=...
+hydra serve all --dangerous-force-http -c opaque/hydra.yaml
+```
+
+Start Oathkeeper.
+
+```sh
+oathkeeper serve -c opaque/oathkeeper.yml
+```
+
+Start API.
+
+```sh
+node opaque/api.js
+```
+
+Start Client.
+
+```sh
+# see: export CLIENT_SECRET=...
+node opaque/client.js
+```
+
+## Appendix
+
 ## Links
 
 - ORY [Hydra](https://www.ory.sh/hydra/docs/), [Oathkeeper](https://www.ory.sh/oathkeeper/docs/).

@@ -1,0 +1,53 @@
+serve:
+  proxy:
+    port: 4455
+  api:
+    port: 4456
+
+access_rules:
+  repositories:
+    - file://./opaque/rules.yml
+  matching_strategy: regexp
+
+# https://www.ory.sh/oathkeeper/docs/next/pipeline/authn
+authenticators:
+  oauth2_introspection:
+    enabled: true
+    config:
+      introspection_url: http://localhost:4445/oauth2/introspect
+      scope_strategy: exact
+      cache:
+        enabled: true
+        ttl: 30s
+
+# https://www.ory.sh/oathkeeper/docs/next/pipeline/authz
+authorizers:
+  allow:
+    enabled: true
+  deny:
+    enabled: true
+
+# https://www.ory.sh/oathkeeper/docs/next/pipeline/mutator
+mutators:
+  header:
+    enabled: true
+    config:
+      headers:
+        X-User: "{{ print .Subject }}"
+  id_token:
+    enabled: true
+    config:
+      issuer_url: http://localhost:4444/
+      jwks_url: http://localhost:4445/keys/hydra.jwt.access-token
+
+errors:
+  fallback:
+    - json
+  handlers:
+    json:
+      enabled: true
+      config:
+        verbose: true
+
+log:
+  level: info
