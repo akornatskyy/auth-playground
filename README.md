@@ -92,6 +92,44 @@ node opaque/client.js
 
 ## Appendix
 
+### JWT Token Sample
+
+```json
+{
+  "aud": [
+    "abc",
+    "xyz"
+  ],
+  "exp": 1622988104,
+  "iat": 1622988044,
+  "iss": "http://localhost:4444/",
+  "jti": "cb3f2165-a0cf-48df-9d8c-8656307856c5",
+  "nbf": 1622988044,
+  "scp": "read write",
+  "sub": "my-client"
+}
+```
+
+### HTTP
+
+Access Token
+
+```http
+POST /oauth2/token HTTP/1.1
+Host: localhost:4444
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 115
+
+grant_type=client_credentials&client_id=my-client&client_secret=change-me-now&scope=read%20write&audience=abc%20xyz
+```
+
+### Jaeger
+
+```sh
+export TRACING_PROVIDER=jaeger
+export TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS=localhost:6831
+```
+
 ## Links
 
 - ORY [Hydra](https://www.ory.sh/hydra/docs/), [Oathkeeper](https://www.ory.sh/oathkeeper/docs/).
