@@ -33,4 +33,4 @@ oauth2:
 #    - xHiEfkCsYDaV8PL5HUs8XwbkhHbPmMGQ
 
 log:
-  level: info
+  level: debug

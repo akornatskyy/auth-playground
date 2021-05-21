@@ -90,6 +90,74 @@ Start Client.
 node opaque/client.js
 ```
 
+## Scenario# 3: keypair token
+
+This scenario is very similar to #1 above, except it uses a *signed JWT token* to request *access key*.
+
+Generate JWK key and copy content of the private key into file `keypair/key.json` (this file is read by the client application).
+
+```sh
+node keypairs/gen-key.js
+```
+
+```sh
+hydra serve admin --dangerous-force-http
+```
+
+> Note, at the time of this writing, Hydra CLI does not support `jwks` parameter.
+
+Issue the following HTTP request.
+
+```sh
+POST /clients HTTP/1.1
+Host: localhost:4445
+Content-Type: application/json
+
+{
+    "client_id": "client-2",
+    "grant_types": [
+        "client_credentials"
+    ],
+    "scope": "read write",
+    "audience": [
+        "abc",
+        "xyz"
+    ],
+    "jwks": {
+        "keys": [
+            {
+                "use": "sig",
+                "kty": "RSA",
+                "kid": "xc4d2XSeF_iYDUCIdzsCujenHC6Gh6r_nwoZAhfplxM",
+                "alg": "RS256",
+                "n": "2gveXesJbXIPl1wclt1bhHf7zasb5TNEymtBKJZnAmZfeNGO-jcaRphAmRZQo33jYpl3Ww5KiEEvEzgoDuX72SXVOFKWUed90LdUAmeJbu7By6vHRo7eaRZ4hWA9dpqh5YRj4ZpKH7Hhvcik-aquZhW-SONOIPk54aRkJwOt1XJgUnHdM4Lp-1s-aEDn4KEpeXfSI1UP0txgRv8hcW4-KZDMXX4AuVdszKGj_4jX4p2YvuhGNBkRKs0Uw6vaYVTvYWBLKie87msu9qrwwsVG0SvxMx0ceJU2PspzIL9uT1COlIFANVIYJJBo41npFWpKVyocAdOe3wC2DoShxsINww",
+                "e": "AQAB"
+            }
+        ]
+    },
+    "token_endpoint_auth_method": "private_key_jwt"
+}
+```
+
+Start Hydra.
+
+```sh
+# see: export DSN=...
+hydra serve public --dangerous-force-http -c jwt/hydra.yaml
+```
+
+Start API.
+
+```sh
+node jwt/api.js
+```
+
+Start Client.
+
+```sh
+node keypairs/client.js
+```
+
 ## Appendix
 
 ### JWT Token Sample
