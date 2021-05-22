@@ -92,6 +92,8 @@ node opaque/client.js
 
 ## Scenario# 3: keypair token
 
+![Scenario #3: keypair token](misc/scenarios-keypair-token.png)
+
 This scenario is very similar to #1 above, except it uses a *signed JWT token* to request *access key*.
 
 Generate JWK key and copy content of the private key into file `keypair/key.json` (this file is read by the client application).
