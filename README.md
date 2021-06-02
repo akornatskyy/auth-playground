@@ -1,6 +1,6 @@
-# OAuth2 Playground
+# Auth Playground
 
-Tools: nodejs, hydra v1.10.2, oathkeeper v0.38.11-beta.1
+Tools: openssl, nodejs, hydra v1.10.2, oathkeeper v0.38.11-beta.1
 
 ## Setup Hydra
 
@@ -160,6 +160,30 @@ Start Client.
 node keypairs/client.js
 ```
 
+## Scenario# 4:  mTLS
+
+![Scenario #4: mTLS](misc/scenarios-mtls.png)
+
+Generate a certificate authority (CA), client and server keys.
+
+> The CA is a private key (ca.key) and public key (wrapped up in a self-signed X.509 certificate) in the PEM format.
+
+```sh
+sh mtls/keys/gen-keys.sh
+```
+
+Start API.
+
+```sh
+node mtls/api.js
+```
+
+Start Client.
+
+```sh
+node mtls/client.js
+```
+
 ## Appendix
 
 ### JWT Token Sample
@@ -203,3 +227,4 @@ export TRACING_PROVIDERS_JAEGER_LOCAL_AGENT_ADDRESS=localhost:6831
 ## Links
 
 - ORY [Hydra](https://www.ory.sh/hydra/docs/), [Oathkeeper](https://www.ory.sh/oathkeeper/docs/).
+- openssl [req](https://www.openssl.org/docs/man1.1.1/man1/openssl-req.html), [genrsa](https://www.openssl.org/docs/man1.1.1/man1/openssl-genrsa.html), [x509](https://www.openssl.org/docs/man1.1.1/man1/openssl-x509.html).
