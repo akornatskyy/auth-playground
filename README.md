@@ -40,22 +40,12 @@ hydra clients create --id my-client --secret $CLIENT_SECRET \
 
 ![Scenario #1: JWT token](misc/scenarios-jwt-token.png)
 
-Start Hydra.
+Start Hydra, API and client.
 
 ```sh
-# see: export DSN=...
+# see: export DSN=... and SECRETS_SYSTEM=...
 hydra serve public --dangerous-force-http -c jwt/hydra.yaml
-```
-
-Start API.
-
-```sh
 node jwt/api.js
-```
-
-Start Client.
-
-```sh
 # see: export CLIENT_SECRET=...
 node jwt/client.js
 ```
@@ -64,28 +54,13 @@ node jwt/client.js
 
 ![Scenario #2: opaque token](misc/scenarios-opaque-token.png)
 
-Start Hydra.
+Start Hydra, Oathkeeper, API and client.
 
 ```sh
-# see: export DSN=...
+# see: export DSN=... and SECRETS_SYSTEM=...
 hydra serve all --dangerous-force-http -c opaque/hydra.yaml
-```
-
-Start Oathkeeper.
-
-```sh
 oathkeeper serve -c opaque/oathkeeper.yml
-```
-
-Start API.
-
-```sh
 node opaque/api.js
-```
-
-Start Client.
-
-```sh
 # see: export CLIENT_SECRET=...
 node opaque/client.js
 ```
@@ -141,22 +116,12 @@ Content-Type: application/json
 }
 ```
 
-Start Hydra.
+Start Hydra, API and client.
 
 ```sh
-# see: export DSN=...
+# see: export DSN=... and SECRETS_SYSTEM=...
 hydra serve public --dangerous-force-http -c jwt/hydra.yaml
-```
-
-Start API.
-
-```sh
 node jwt/api.js
-```
-
-Start Client.
-
-```sh
 node keypairs/client.js
 ```
 
@@ -172,15 +137,10 @@ Generate a certificate authority (CA), client and server keys.
 sh mtls/keys/gen-keys.sh
 ```
 
-Start API.
+Start API and client.
 
 ```sh
 node mtls/api.js
-```
-
-Start Client.
-
-```sh
 node mtls/client.js
 ```
 
